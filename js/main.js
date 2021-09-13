@@ -1,4 +1,3 @@
-
 function showpass() {
   var x = document.getElementById("myInput");
   if (x.type === "password") {
@@ -33,3 +32,6 @@ function validatePassword(){
 password.onchange = validatePassword;
 confirm_password.onkeyup = validatePassword;
 }
+
+
+

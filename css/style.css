@@ -1,9 +1,13 @@
 body{
-    background: #eee
+  background: url("img/bg.jpg");
+  background-color: #eeeeee;
+  background-size: 300px 150px;
+  background-repeat: no-repeat;
+    
 }
 
 .card-wrapper {
-	max-width: 500px;
+	       max-width: 500px;
         margin: 50px;
     
 }
@@ -24,3 +28,12 @@ body{
 .alignright {
 	float: right;
 }
+
+
+
+
+
+
+
+
+
