@@ -1,0 +1,26 @@
+body{
+    background: #eee
+}
+
+.card-wrapper {
+	max-width: 500px;
+        margin: 50px;
+    
+}
+
+.form-signin-heading
+{
+    margin-bottom: 30px;
+
+}
+.form-control
+{
+    margin-bottom: 10px;
+    
+}
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
+}
