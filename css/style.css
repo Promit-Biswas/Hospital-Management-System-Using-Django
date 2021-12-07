@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 body
 {
   margin:0;
@@ -7,14 +10,7 @@ body
 
 
 
-header {
-  padding: 150px 0 100px;
-}
 
-section {
-  min-height: 600px;
-  padding: 50px 0 50px;
-}
 
 .navbar .nav-link {
   border-radius: 8px;
@@ -32,6 +28,10 @@ section {
 .navbar .nav-link.active {
   background-color: rgba(0, 0, 0, .5);
 }
+.logoimg{
+border-radius: 15%;
+}
+
 
 
 .editorial {
@@ -41,7 +41,7 @@ section {
   max-height: 60px;
   margin: 0;
   z-index:5;
-  bottom:0;
+  bottom:0px;
   position:absolute;
   left:0px;
   float:left;
@@ -134,4 +134,45 @@ section {
 	float: right;
 }
 
+
+
+
+
+
+
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 25%;
+  padding: 10px 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 -5px;}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+    margin-left: 20px;
+  }
+}
+
+/* Style the counter cards */
+.cards {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  left-padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+}
 
