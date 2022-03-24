@@ -25,7 +25,7 @@ Narail Sadar Hospital Management System
 
 
 # Main Page Features
-<img src="images/readme.png">
+<img src="image/readme.png">
 
 
 ### **Home**
