@@ -1,5 +1,5 @@
 function showpass() {
-  var x = document.getElementById("myInput");
+  var x = document.getElementById("password");
   if (x.type === "password") {
     x.type = "text";
   } else {
@@ -18,7 +18,7 @@ var y = document.getElementById("myInput1");
 
 function regbtn() {
 
-var password = document.getElementById("myInput")
+var password = document.getElementById("password")
   , confirm_password = document.getElementById("myInput1");
 
 function validatePassword(){
