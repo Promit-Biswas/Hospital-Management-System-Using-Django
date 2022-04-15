@@ -21,10 +21,6 @@ function signUp(){
     const email = document.getElementById("email").value
     const password = document.getElementById("password").value
     firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(() => {
-        alert("Registration Done . Now Login")
-	location.replace("login.html")
-    })
     .catch((error) => {
         document.getElementById("error").innerHTML = error.message
     });

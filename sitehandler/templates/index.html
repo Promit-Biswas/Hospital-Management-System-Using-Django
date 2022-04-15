@@ -23,12 +23,14 @@
 
         <a href="#" class="logo"> <i class="fas fa-heartbeat"></i> Narail Sadar Hospital </a>
 
-        <nav class="navbar">
+        <nav class="navbar navbar-expand-md">
+            
             <a href="#home">home</a>
             <a href="#services">services</a>
             <a href="#about">about</a>
             <a href="#doctors">doctors</a>
             <a href="{% url 'loginpage' %}"">Login</a>
+            <a class="nav-link" href="{% url 'createaccountpage' %}">Register</a>
 
         </nav>
 
@@ -43,7 +45,7 @@
     <section class="home" id="home">
 
         <div class="image">
-            <img src="{% static 'image/home-img.png' %}" alt="">
+            <img src="{% static 'img/home-img.png' %}" alt="">
         </div>
 
         <div class="content">
@@ -154,7 +156,7 @@
         <div class="row">
 
             <div class="image">
-                <img src="{% static 'img/about-img.png" alt="">
+                <img src="{% static 'img/about-img.png' %}">
             </div>
 
             <div class="content">

@@ -1,0 +1,29 @@
+{% include 'include.html' %}
+{% include 'navbar.html' %}
+{% load static %}
+{% block body %}
+
+{% if error == "no" %}
+<script type="text/javascript">
+	alert('Logged In Sucessfully..........')
+	window.location = ('{% url 'adminhome' %}')
+</script>
+{% endif%}
+
+{% if error == "yes" %}
+<script type="text/javascript">
+	alert('Invalid Credentials..........')
+</script>
+{% endif%}
+
+<div class="login-dark" style="background-image: url(&quot;{% static 'img/bgpicture.jpg' %}&quot;);">
+    <form method="post">
+    	{% csrf_token %}
+        <h2 class="sr-only">Admin Login Form</h2>
+        <div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+        <div class="form-group"><input class="form-control" name="username" placeholder="Username"></div>
+        <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+        <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Log In</button></div>
+    </form>
+</div>
+{% endblock %}
