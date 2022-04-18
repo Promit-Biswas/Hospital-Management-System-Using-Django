@@ -132,6 +132,13 @@ def adminviewDoctor(request):
 	d = { 'doc' : doc }
 	return render(request,'adminviewDoctors.html',d)
 
+def adminviewPatient(request):
+	if not request.user.is_staff:
+		return redirect('login_admin')
+	doc = Patient.objects.all()
+	d = { 'doc' : doc }
+	return render(request,'adminviewPatient.html',d)
+
 def admin_delete_doctor(request,pid,email):
 	if not request.user.is_staff:
 		return redirect('login_admin')
@@ -140,6 +147,14 @@ def admin_delete_doctor(request,pid,email):
 	users = User.objects.filter(username=email)
 	users.delete()
 	return redirect('adminviewDoctor')
+def admin_delete_patient(request,pid,email):
+	if not request.user.is_staff:
+		return redirect('login_admin')
+	patient = Patient.objects.get(id=pid)
+	patient.delete()
+	users = User.objects.filter(username=email)
+	users.delete()
+	return redirect('adminviewPatient')
 
 def patient_delete_appointment(request,pid):
 	if not request.user.is_active:
@@ -152,12 +167,14 @@ def adminviewAppointment(request):
 	if not request.user.is_staff:
 		return redirect('login_admin')
 	upcomming_appointments = Appointment.objects.filter(appointmentdate__gte=timezone.now(),status=True).order_by('appointmentdate')
-	#print("Upcomming Appointment",upcomming_appointments)
-	previous_appointments = Appointment.objects.filter(appointmentdate__lt=timezone.now()).order_by('-appointmentdate') | Appointment.objects.filter(status=False).order_by('-appointmentdate')
-	#print("Previous Appointment",previous_appointments)
-	d = { "upcomming_appointments" : upcomming_appointments, "previous_appointments" : previous_appointments }
+	d = { "upcomming_appointments" : upcomming_appointments}
 	return render(request,'adminviewappointments.html',d)
-
+def adminviewprevious(request):
+	if not request.user.is_staff:
+		return redirect('login_admin')
+	previous_appointments = Appointment.objects.filter(appointmentdate__lt=timezone.now()).order_by('-appointmentdate') | Appointment.objects.filter(status=False).order_by('-appointmentdate')
+	d = {"previous_appointments" : previous_appointments }
+	return render(request,'adminviewprevious.html',d)
 
 def Logout(request):
 	if not request.user.is_active:

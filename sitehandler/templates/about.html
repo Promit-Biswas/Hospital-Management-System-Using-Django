@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
 <body>
@@ -22,8 +23,9 @@
     <a href="#" class="logo"> <i class="fas fa-heartbeat"></i> Narail Sadar Hospital </a>
 
     <nav class="navbar">
-        <a href="index.html">home</a>
-        <a href="login.html">Login</a>
+        <a href="{% url 'homepage' %}">Home</a>
+        <a href="{% url 'loginpage' %}">Login</a>
+        <a class="nav-link" href="{% url 'createaccountpage' %}">Register</a>
 
     </nav>
 
@@ -44,7 +46,7 @@
     <div class="row">
 
         <div class="image">
-            <img src="image/checkup.png" alt="">
+            <img src="{% static 'img/about-img.png' %}" alt="">
         </div>
 
         <div class="content">
@@ -71,19 +73,19 @@
 
         <div class="box">
             <h3>quick links</h3>
-            <a href="index.html"> <i class="fas fa-chevron-right"></i> home </a>
-            <a href="index.html"> <i class="fas fa-chevron-right"></i> services </a>
-            <a href="index.html"> <i class="fas fa-chevron-right"></i> about </a>
-            <a href="index.html"> <i class="fas fa-chevron-right"></i> doctors </a>
+            <a href="{% url 'homepage' %}"> <i class="fas fa-chevron-right"></i> home </a>
+            <a href="{% url 'homepage' %}"> <i class="fas fa-chevron-right"></i> services </a>
+            <a href="{% url 'homepage' %}"> <i class="fas fa-chevron-right"></i> about </a>
+            <a href="{% url 'homepage' %}"> <i class="fas fa-chevron-right"></i> doctors </a>
 
         </div>
 
         <div class="box">
             <h3>our services</h3>
-            <a href="ambulance.html"> <i class="fas fa-chevron-right"></i>24/7 Ambulance Service </a>
-            <a href="medicine.html"> <i class="fas fa-chevron-right"></i> Medicines </a>
-            <a href="about.html"> <i class="fas fa-chevron-right"></i> diagnosis </a>
-            <a href="blood.html"> <i class="fas fa-chevron-right"></i> Blood Bank </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i>24/7 Ambulance Service </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> Medicines </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> diagnosis </a>
+            <a href="#"> <i class="fas fa-chevron-right"></i> Blood Bank </a>
         </div>
 
         <div class="box">
@@ -129,7 +131,7 @@
 
 
 <!-- custom js file link  -->
-<script src="js/script.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
 
 </body>
 </html>

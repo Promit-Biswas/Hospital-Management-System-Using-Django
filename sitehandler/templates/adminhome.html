@@ -4,15 +4,24 @@
     {% include 'include.html' %}
     {% load static %}
 </head>
-<body style="background-image: url(&quot;{% static 'img/star-sky.jpg' %}&quot;);">
+<body >
     {% include 'adminnav.html' %}
     <div id="wrapper">
         {% include 'admin_include.html' %}
         <div class="page-content-wrapper">
-            <div class="container-fluid"><a class="btn btn-link" role="button" id="menu-toggle" href="#menu-toggle"><i class="fa fa-bars" style="color: white;"></i></a>
-                <h1 class="text-center" style="color: white;">You are sucessfully logged in..{{ user.username }}</h1>
+            <div class="container-fluid"><a class="btn btn-link" role="button" id="menu-toggle" href="#menu-toggle"><i class="fa fa-bars"></i></a>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            <h1 class="text-center" style="color:blueviolet;">..Wellcome..</h1>
+                            <h1 class="text-center" style="background-color:DodgerBlue; color:white">{{ user.username }}</h1>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+        
     </div>
 </body>
 </html>

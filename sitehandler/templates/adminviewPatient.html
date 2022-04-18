@@ -21,7 +21,7 @@
         {% include 'admin_include.html'%}
         <div class="page-content-wrapper">
             <div class="container-fluid"><a class="btn btn-link" role="button" id="menu-toggle" href="#menu-toggle"><i class="fa fa-bars" style="color: black;"></i></a>
-                <h2 class="text-center">ALL DOCTORS</h2>
+                <h2 class="text-center">ALL Patients</h2>
                 <section id="team" class="pb-5">
                     <div class="container">
                        <table class="table" id="example"><!--table-hover-->
@@ -33,7 +33,6 @@
                                     <th>Phone Number</th>
                                     <th>Date of Birth</th>
                                     <th>Blood Group</th>
-                                    <th>Specialization</th>
                                     <th>Address</th>
                                     <th>Action</th>
                                 </tr>
@@ -47,9 +46,8 @@
                                     <td>{{ i.phonenumber }}</td>
                                     <td>{{ i.birthdate }}</td>
                                     <td>{{ i.bloodgroup }}</td>
-                                    <td>{{ i.specialization }}</td>
                                     <td>{{ i.address }}</td>
-                                    <td><a href="{% url 'admin_delete_doctor' i.id i.email %}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger">Delete</a></td>
+                                    <td><a href="{% url 'admin_delete_patient' i.id i.email %}" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger">Delete</a></td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

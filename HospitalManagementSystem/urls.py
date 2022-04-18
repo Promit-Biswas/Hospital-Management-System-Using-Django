@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from sitehandler.views import *
+from django.contrib.auth import views as auth_views  
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,9 +29,11 @@ urlpatterns = [
     path('adminlogout/',Logout_admin,name='adminlogout'),
     path('adminaddDoctor/',adminaddDoctor,name='adminaddDoctor'),
     path('adminviewDoctor/',adminviewDoctor,name='adminviewDoctor'),
+    path('adminviewPatient/',adminviewPatient,name='adminviewPatient'),
     path('adminDeleteDoctor<int:pid><str:email>',admin_delete_doctor,name='admin_delete_doctor'),
-
+    path('adminDeletePatient<int:pid><str:email>',admin_delete_patient,name='admin_delete_patient'),
     path('adminviewAppointment/',adminviewAppointment,name='adminviewAppointment'),
+    path('adminviewprevious/',adminviewprevious,name='adminviewprevious'),
     path('home/',Home,name='home'),
     path('profile/',profile,name='profile'),
     path('makeappointments/',MakeAppointments,name='makeappointments'),
@@ -38,5 +41,13 @@ urlpatterns = [
     path('viewprevious/',viewprevious,name='viewprevious'),
     path('PatientDeleteAppointment<int:pid>',patient_delete_appointment,name='patient_delete_appointment'),
     path('logout/',Logout,name='logout'),
+    
+
+    path('password_reset/',auth_views.PasswordResetView.as_view(),name='password_reset'),
+    path('password_reset/done/',auth_views.PasswordResetDoneView.as_view(),name='password_reset_done'),
+    path('reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(),name='password_reset_confirm'),
+    path('reset/done/',auth_views.PasswordResetCompleteView.as_view(),name='password_reset_complete'),
+
+
 ]
 

@@ -14,7 +14,9 @@
         <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
         <input type="checkbox" onclick="showpass()"> Show Password </input>
         <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Log In</button></div>
-        <div class="text-center">New User? Sign Up <a href="{% url 'createaccountpage' %}"">Here</a></div>
+        <div class="text-center">New User? Sign Up <a href="{% url 'createaccountpage' %}">Here</a><br>
+            Forget Password? Click <a href="{% url 'password_reset' %}">Here</a>
+        </div>
     </form>
 </div>
 
