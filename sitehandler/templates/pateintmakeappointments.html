@@ -71,15 +71,14 @@
     <div class="scroll-top-wrapper"><span class="scroll-top-inner"><i class="fa fa-arrow-circle-up"></i></span></div>
     {% if error ==  "no" %}
 <script type="text/javascript">
-    alert('Appointment Booked Sucessfully..........')
+    alert('Appointment Booked Sucessfully.')
     window.location = ('{% url 'makeappointments' %}')
 </script>
 {% endif%}
 
 {% if error ==  "yes" %}
 <script type="text/javascript">
-    /*alert('{{e}}')*/
-    alert('Something gone wrong....')
+    alert('Something gone wrong.')
 </script>
 {% endif%}
      <script src="{% static 'js/jquery.min.js' %}"></script>

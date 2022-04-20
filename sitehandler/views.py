@@ -42,7 +42,6 @@ def loginpage(request):
 		p = request.POST['password']
 		user = authenticate(request,username=u,password=p)
 		profile_obj = Patients.objects.filter(email = u ).first()
-		print(profile_obj)
 		if not profile_obj.is_verified:
 			error="notv"
 		if user is None:
@@ -124,9 +123,9 @@ def verify(request , auth_token):
             profile_obj.save()
             return render(request,'tokensuccess.html')
         else:
-            return redirect('/')
+            return redirect(request,'index.html')
     except Exception as e:
-        return redirect('/')
+        return redirect(request,'index.html')
  
 
 def adminaddDoctor(request):
