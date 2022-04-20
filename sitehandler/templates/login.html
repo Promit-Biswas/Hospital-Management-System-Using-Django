@@ -3,6 +3,37 @@
 {% block body %}
 {% load static %}
 
+{% load static %}
+
+{% if error == "no" %}
+    {% if page == "doctor" %}
+    <script type="text/javascript">
+        alert('Logged In Sucessfully.')
+    </script>
+    {% endif %}
+
+    {% if page == "patient" %}
+    <script type="text/javascript">
+        alert('Logged In Sucessfully.')
+    </script>
+    {% endif %}
+{% endif%}
+{% if error == "yes" %}
+<script type="text/javascript">
+    alert('Please Check Your Credentials.')
+</script>
+{% endif %}
+{% if error == "tokendone" %}
+<script type="text/javascript">
+    alert('Your email is verified.Now Login')
+</script>
+{% endif %}
+{% if error == "notv" %}
+<script type="text/javascript">
+    alert('Check your email.')
+</script>
+{% endif %}
+
 
 <div class="login-dark" style="background-image: url(&quot;{% static 'img/bgpicture.jpg' %}&quot;);">
     <form method="post">

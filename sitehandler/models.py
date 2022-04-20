@@ -1,7 +1,8 @@
+from pyexpat import model
 from django.db import models
 
 # Create your models here.
-class Doctor(models.Model):
+class Doctors(models.Model):
 	name = models.CharField(max_length=50)
 	email = models.EmailField(unique=True)
 	password = models.CharField(max_length=200)
@@ -11,11 +12,13 @@ class Doctor(models.Model):
 	birthdate = models.DateField()
 	bloodgroup = models.CharField(max_length=5)
 	specialization = models.CharField(max_length=50)
+	is_verified=models.BooleanField(default=True)
+
 
 	def __str__(self):
 		return self.name
 
-class Patient(models.Model):
+class Patients(models.Model):
 	name = models.CharField(max_length=50)
 	email = models.EmailField(unique=True)
 	password = models.CharField(max_length=200)
@@ -24,9 +27,13 @@ class Patient(models.Model):
 	address = models.CharField(max_length=100)
 	birthdate = models.DateField()
 	bloodgroup = models.CharField(max_length=5)
+	auth_token=models.CharField(max_length=200)
+	is_verified=models.BooleanField(default=False)
+
 
 	def __str__(self):
 		return self.name
+
 
 class Appointment(models.Model):
 	doctorname = models.CharField(max_length=50)

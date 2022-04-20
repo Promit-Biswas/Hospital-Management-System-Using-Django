@@ -1,8 +1,13 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User,Group
 from .models import *
+import uuid
 from django.contrib.auth import authenticate,logout,login
 from django.utils import timezone
+from django.conf import settings
+from django.core.mail import send_mail
+
+
 
 # Create your views here.
 
@@ -36,32 +41,38 @@ def loginpage(request):
 		u = request.POST['email']
 		p = request.POST['password']
 		user = authenticate(request,username=u,password=p)
+		if user is None:
+			error="yes"
 		try:
 			if user is not None:
 				login(request,user)
 				error = "no"
 				g = request.user.groups.all()[0].name
 				if g == 'Doctor':
-					page = "doctor"
+					page = "doctors"
 					d = {'error': error,'page':page}
-					print("Problem eikhane o")
 					return render(request,'doctorhome.html',d)
 				elif g == 'Patient':
-					page = "patient"
+					page = "patients"
 					d = {'error': error,'page':page}
-					print("Problem eikhane")
 					return render(request,'patienthome.html',d)
+
 			else:
 				error = "yes"
 		except Exception as e:
 			error = "yes"
-			#print(e)
-			#raise e
-	return render(request,'login.html')
+	d = {'error': error}
+	if error == "yes":
+		d = {'error': error}
+	elif error == "notv":
+		d = {'error': error}
+	return render(request,'login.html',d)
 
 def createaccountpage(request):
 	error = ""
 	user="none"
+	auth_token = str(uuid.uuid4())
+	is_verified = False
 	if request.method == 'POST':
 		name = request.POST['name']
 		email = request.POST['email']
@@ -72,25 +83,45 @@ def createaccountpage(request):
 		address = request.POST['address']
 		birthdate = request.POST['dateofbirth']
 		bloodgroup = request.POST['bloodgroup']
+
 		try:
 			if password == repeatpassword:
-				Patient.objects.create(name=name,email=email,password=password,gender=gender,phonenumber=phonenumber,address=address,birthdate=birthdate,bloodgroup=bloodgroup)
+				send_mail_after_registration(email , auth_token)
+				Patients.objects.create(name=name,email=email,password=password,gender=gender,phonenumber=phonenumber,address=address,birthdate=birthdate,bloodgroup=bloodgroup, auth_token=auth_token,is_verified =is_verified)
 				user = User.objects.create_user(first_name=name,email=email,password=password,username=email)
 				pat_group = Group.objects.get(name='Patient')
 				pat_group.user_set.add(user)
-				#print(pat_group)
 				user.save()
-				#print(user)
 				error = "no"
 			else:
 				error = "yes"
 		except Exception as e:
 			error = "yes"
-			#print("Error:",e)
 	d = {'error' : error}
-	#print(error)
 	return render(request,'createaccount.html',d)
-	#return render(request,'createaccount.html')
+
+def send_mail_after_registration(email , token):
+    subject = 'Your account need to be verified'
+    message = f'Hi paste the link to verify your account http://127.0.0.1:8000/verify/{token}'
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [email]
+    send_mail(subject, message , email_from ,recipient_list )
+
+
+def verify(request , auth_token):
+    try:
+        profile_obj = Patients.objects.filter(auth_token = auth_token).first()
+    
+
+        if profile_obj:
+            profile_obj.is_verified = True
+            profile_obj.save()
+            return redirect('homepage')
+        else:
+            return redirect('/')
+    except Exception as e:
+        return redirect('/')
+ 
 
 def adminaddDoctor(request):
 	error = ""
@@ -112,7 +143,7 @@ def adminaddDoctor(request):
 		
 		try:
 			if password == repeatpassword:
-				Doctor.objects.create(name=name,email=email,password=password,gender=gender,phonenumber=phonenumber,address=address,birthdate=birthdate,bloodgroup=bloodgroup,specialization=specialization)
+				Doctors.objects.create(name=name,email=email,password=password,gender=gender,phonenumber=phonenumber,address=address,birthdate=birthdate,bloodgroup=bloodgroup,specialization=specialization)
 				user = User.objects.create_user(first_name=name,email=email,password=password,username=email)
 				doc_group = Group.objects.get(name='Doctor')
 				doc_group.user_set.add(user)
@@ -128,21 +159,21 @@ def adminaddDoctor(request):
 def adminviewDoctor(request):
 	if not request.user.is_staff:
 		return redirect('login_admin')
-	doc = Doctor.objects.all()
+	doc = Doctors.objects.all()
 	d = { 'doc' : doc }
 	return render(request,'adminviewDoctors.html',d)
 
 def adminviewPatient(request):
 	if not request.user.is_staff:
 		return redirect('login_admin')
-	doc = Patient.objects.all()
+	doc = Patients.objects.all()
 	d = { 'doc' : doc }
 	return render(request,'adminviewPatient.html',d)
 
 def admin_delete_doctor(request,pid,email):
 	if not request.user.is_staff:
 		return redirect('login_admin')
-	doctor = Doctor.objects.get(id=pid)
+	doctor = Doctors.objects.get(id=pid)
 	doctor.delete()
 	users = User.objects.filter(username=email)
 	users.delete()
@@ -150,7 +181,7 @@ def admin_delete_doctor(request,pid,email):
 def admin_delete_patient(request,pid,email):
 	if not request.user.is_staff:
 		return redirect('login_admin')
-	patient = Patient.objects.get(id=pid)
+	patient = Patients.objects.get(id=pid)
 	patient.delete()
 	users = User.objects.filter(username=email)
 	users.delete()
@@ -209,11 +240,11 @@ def profile(request):
 		return redirect('loginpage')
 	g = request.user.groups.all()[0].name
 	if g == 'Patient':
-		patient_detials = Patient.objects.all().filter(email=request.user)
+		patient_detials = Patients.objects.all().filter(email=request.user)
 		d = { 'patient_detials' : patient_detials }
 		return render(request,'pateintprofile.html',d)
 	elif g == 'Doctor':
-		doctor_detials = Doctor.objects.all().filter(email=request.user)
+		doctor_detials = Doctors.objects.all().filter(email=request.user)
 		d = { 'doctor_detials' : doctor_detials }
 		return render(request,'doctorprofile.html',d)
 
@@ -221,7 +252,7 @@ def MakeAppointments(request):
 	error = ""
 	if not request.user.is_active:
 		return redirect('loginpage')
-	alldoctors = Doctor.objects.all()
+	alldoctors = Doctors.objects.all()
 	d = { 'alldoctors' : alldoctors }
 	g = request.user.groups.all()[0].name
 	if g == 'Patient':
