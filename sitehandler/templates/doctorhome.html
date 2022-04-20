@@ -5,6 +5,13 @@
     {% include 'include.html' %}
     {% load static %}
 </head>
+{% if error == "no" %}
+    {% if page == "doctors" %}
+    <script type="text/javascript">
+        alert('Logged In Sucessfully.')
+    </script>
+    {% endif %}
+{% endif %}
 
 <body>
     {% include 'adminnav.html' %}
@@ -24,7 +31,6 @@
             </div>
         </div>
     </div>
-{% include 'redirecthome.html' %}
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/back-to-top-scroll.js' %}"></script>

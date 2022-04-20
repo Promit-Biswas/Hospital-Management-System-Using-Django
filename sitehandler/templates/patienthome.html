@@ -7,6 +7,7 @@
 </head>
 
 <body>
+
     {% include 'adminnav.html' %}
     <div id="wrapper">
         {% include 'patient_nav.html' %}
@@ -24,7 +25,13 @@
             </div>
         </div>
     </div>
-{% include 'redirecthome.html' %}
+{% if error == "no" %}
+    {% if page == "patients" %}
+    <script type="text/javascript">
+        alert('Logged In Sucessfully.')
+    </script>
+    {% endif %}
+{% endif%}
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/back-to-top-scroll.js' %}"></script>

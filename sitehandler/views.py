@@ -41,6 +41,10 @@ def loginpage(request):
 		u = request.POST['email']
 		p = request.POST['password']
 		user = authenticate(request,username=u,password=p)
+		profile_obj = Patients.objects.filter(email = u ).first()
+		print(profile_obj)
+		if not profile_obj.is_verified:
+			error="notv"
 		if user is None:
 			error="yes"
 		try:
@@ -52,11 +56,13 @@ def loginpage(request):
 					page = "doctors"
 					d = {'error': error,'page':page}
 					return render(request,'doctorhome.html',d)
-				elif g == 'Patient':
-					page = "patients"
-					d = {'error': error,'page':page}
-					return render(request,'patienthome.html',d)
-
+				if profile_obj.is_verified:
+					if g == 'Patient':
+						page = "patients"
+						d = {'error': error,'page':page}
+						return render(request,'patienthome.html',d)
+				else:
+					error="notv"
 			else:
 				error = "yes"
 		except Exception as e:
@@ -116,7 +122,7 @@ def verify(request , auth_token):
         if profile_obj:
             profile_obj.is_verified = True
             profile_obj.save()
-            return redirect('homepage')
+            return render(request,'tokensuccess.html')
         else:
             return redirect('/')
     except Exception as e:
