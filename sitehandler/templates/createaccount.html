@@ -112,4 +112,9 @@
     alert('Email already exists. Try Another Email')
 </script>
 {% endif%}
+{% if error == "nopass" %}
+<script type="text/javascript">
+    alert("Password Doesn't Match. Check Password Again.")
+</script>
+{% endif%}
 {% endblock %}

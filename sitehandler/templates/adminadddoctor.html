@@ -147,6 +147,12 @@
     alert('Email already exists.Try Another Email.')
 </script>
 {% endif%}
+{% if error == "nopass" %}
+<script type="text/javascript">
+    alert("Password Doesn't Match. Check Password Again.")
+</script>
+{% endif%}
+
     <div class="scroll-top-wrapper"><span class="scroll-top-inner"><i class="fa fa-arrow-circle-up"></i></span></div>
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>

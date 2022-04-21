@@ -42,30 +42,29 @@ def loginpage(request):
 		p = request.POST['password']
 		user = authenticate(request,username=u,password=p)
 		profile_obj = Patients.objects.filter(email = u ).first()
-		if not profile_obj.is_verified:
-			error="notv"
 		if user is None:
 			error="yes"
-		try:
-			if user is not None:
-				login(request,user)
-				error = "no"
-				g = request.user.groups.all()[0].name
-				if g == 'Doctor':
-					page = "doctors"
-					d = {'error': error,'page':page}
-					return render(request,'doctorhome.html',d)
-				if profile_obj.is_verified:
-					if g == 'Patient':
-						page = "patients"
+		else:
+			try:
+				if user is not None:
+					login(request,user)
+					error = "no"
+					g = request.user.groups.all()[0].name
+					if g == 'Doctor':
+						page = "doctors"
 						d = {'error': error,'page':page}
-						return render(request,'patienthome.html',d)
+						return render(request,'doctorhome.html',d)
+					if profile_obj.is_verified:
+						if g == 'Patient':
+							page = "patients"
+							d = {'error': error,'page':page}
+							return render(request,'patienthome.html',d)
+					else:
+						error="notv"
 				else:
-					error="notv"
-			else:
+					error = "yes"
+			except Exception as e:
 				error = "yes"
-		except Exception as e:
-			error = "yes"
 	d = {'error': error}
 	if error == "yes":
 		d = {'error': error}
@@ -99,7 +98,7 @@ def createaccountpage(request):
 				user.save()
 				error = "no"
 			else:
-				error = "yes"
+				error = "nopass"
 		except Exception as e:
 			error = "yes"
 	d = {'error' : error}
@@ -155,7 +154,7 @@ def adminaddDoctor(request):
 				user.save()
 				error = "no"
 			else:
-				error = "yes"
+				error = "nopass"
 		except Exception as e:
 			error = "yes"
 	d = {'error' : error}
