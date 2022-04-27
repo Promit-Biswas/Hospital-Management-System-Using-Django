@@ -6,7 +6,7 @@ Narail Sadar Hospital Management System
 ## Features 
 
 1. Home Page 
-2. Service Page
+2. Service Page 
 3. About Page
 4. Professional Doctor Page
 5. Login Page
