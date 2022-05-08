@@ -24,7 +24,7 @@
                                 <div class="col-sm-6 input-column">
                                     <select class="form-control" name="doctoremail">
                                             {% for d in alldoctors %}
-                                            <option value="{{d.email}}">{{d.name}}----->{{d.specialization}}</option>
+                                            <option value="{{d.email}}">{{d.name}} as "{{d.specialization}}"</option>
                                             {% endfor %}
                                     </select>
                                 </div>

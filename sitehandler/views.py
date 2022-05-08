@@ -113,19 +113,18 @@ def send_mail_after_registration(email , token):
 
 
 def verify(request , auth_token):
-    try:
-        profile_obj = Patients.objects.filter(auth_token = auth_token).first()
-    
+	profile_obj = Patients.objects.filter(auth_token = auth_token).first()
+	if profile_obj.is_verified:
+		d = {'error' : 'verified'}
+		return render(request,'login.html',d)
+	elif profile_obj:
+		profile_obj.is_verified = True
+		profile_obj.save()
+		return render(request,'tokensuccess.html')
 
-        if profile_obj:
-            profile_obj.is_verified = True
-            profile_obj.save()
-            return render(request,'tokensuccess.html')
-        else:
-            return redirect(request,'index.html')
-    except Exception as e:
-        return redirect(request,'index.html')
- 
+	else:
+		return redirect(request,'index.html')
+
 
 def adminaddDoctor(request):
 	error = ""

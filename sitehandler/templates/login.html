@@ -17,6 +17,11 @@
 </script>
 {% endif %}
 
+{% if error == "verified" %}
+<script type="text/javascript">
+    alert('Your verification link is already used. Try to Login or Forget Password.')
+</script>
+{% endif %}
 
 <div class="login-dark" style="background-image: url(&quot;{% static 'img/bgpicture.jpg' %}&quot;);">
     <form method="post">
