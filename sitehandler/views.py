@@ -119,6 +119,7 @@ def verify(request , auth_token):
 		return render(request,'login.html',d)
 	elif profile_obj:
 		profile_obj.is_verified = True
+		profile_obj.auth_token = "verified"
 		profile_obj.save()
 		return render(request,'tokensuccess.html')
 
@@ -307,3 +308,6 @@ def viewprevious(request):
 		previous_appointments = Appointment.objects.filter(doctoremail=request.user,appointmentdate__lt=timezone.now()).order_by('-appointmentdate') | Appointment.objects.filter(doctoremail=request.user,status=False).order_by('-appointmentdate')
 		d = { "previous_appointments" : previous_appointments }
 		return render(request,'doctorviewprevious.html',d)
+
+def handle_not_found(request,exception):
+	return render(request,'error.html')

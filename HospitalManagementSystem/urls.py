@@ -52,3 +52,5 @@ urlpatterns = [
 
 ]
 
+handler404="sitehandler.views.handle_not_found"
+
